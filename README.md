@@ -39,6 +39,6 @@ The model uses one salary for every city. It does not include student loan repay
 
 ## GitHub files
 
-Keep `analysis.py`, `fetch_data.py`, `data/rents.csv`, `requirements.txt`, `README.md`, and `chart.png` in the repository. The CSV lets people rerun the analysis even if the source website is unavailable; the PNG lets the chart appear in the README and in a post.
+Keep `analysis.py`, `fetch_data.py`, `data/rents.csv`, `requirements.txt`, `README.md`, `linkedin_post.md`, and `chart.png` in the repository. The CSV lets people rerun the analysis even if the source website is unavailable; the PNG appears in the README, and `linkedin_post.md` contains a ready-to-edit caption for sharing it.
 
 Built by [Yogesh Dahiwal](https://www.linkedin.com/in/yogesh-dahiwal-145b2a245) · [Portfolio](https://yogesh-dahiwal.netlify.app)
