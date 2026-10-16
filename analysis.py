@@ -8,7 +8,9 @@ getting squeezed.
 Yogesh Dahiwal
 """
 
+import csv
 import os
+from pathlib import Path
 
 import matplotlib
 matplotlib.use("Agg")
@@ -19,13 +21,15 @@ from matplotlib import font_manager as fm
 # first-degree grads, 15 months out).
 GROSS_SALARY = 28_500
 
-# Average monthly room rent incl. bills, SpareRoom Rental Index Q3 2026.
-RENT = {
-    "London (Inner)": 1002, "Edinburgh": 894, "Bath": 853, "Oxford": 834,
-    "Cambridge": 792, "York": 750, "Bristol": 746, "Manchester": 685,
-    "Gloucester": 642, "Birmingham": 614, "Leeds": 578, "Liverpool": 554,
-    "Sheffield": 540, "Hull": 507,
-}
+DATA_FILE = Path(__file__).resolve().parent / "data" / "rents.csv"
+with DATA_FILE.open(newline="", encoding="utf-8") as rent_file:
+    rent_rows = list(csv.DictReader(rent_file))
+
+if not rent_rows:
+    raise ValueError(f"No rent data found in {DATA_FILE}")
+
+RENT = {row["city"]: int(row["rent_gbp"]) for row in rent_rows}
+RENT_PERIOD = rent_rows[0]["period"]
 
 # 2025/26 England bands
 PERSONAL_ALLOWANCE = 12_570   # tax-free
@@ -109,7 +113,7 @@ fig.text(0.045, 0.965, "Where can a UK graduate actually afford to live?",
 fig.text(0.045, 0.925, "Share of a graduate's take-home pay spent on an average room, by city",
          fontproperties=f_reg, fontsize=12.5, color=GREY)
 fig.text(0.045, 0.038,
-         "Rent: SpareRoom avg room (incl. bills), Q3 2026  ·  Salary: £28,500 median graduate (HESA)  ·  Take-home after tax + NI, 2025/26",
+         f"Rent: SpareRoom avg room (incl. bills), {RENT_PERIOD}  ·  Salary: £28,500 median graduate (HESA)  ·  Take-home after tax + NI, 2025/26",
          fontproperties=f_reg, fontsize=9.3, color="#6D7890")
 fig.text(0.955, 0.918, "Yogesh Dahiwal", fontproperties=f_med, fontsize=11, color=TEAL, ha="right")
 
